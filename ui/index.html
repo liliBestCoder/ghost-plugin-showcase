@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Plugin Showcase</title>
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<!-- Every text below comes from app.js's dictionary (data-t="key"), in the
+     handshake's language. Every value from the server is set with
+     textContent. The spec reference and the file on each section are the
+     same in both languages, so they are written here. -->
+<header>
+  <img id="icon" alt="" width="40" height="40" hidden>
+  <div class="head">
+    <h1 data-t="title"></h1>
+    <p id="status" class="status" role="status"></p>
+    <nav id="nav"></nav>
+  </div>
+</header>
+<p id="standalone" class="banner" hidden data-t="standaloneBanner"></p>
+
+<main>
+  <section class="card" id="sec-protocol">
+    <h2 data-t="hProtocol"></h2>
+    <p class="spec">spec-host-protocol §2, §3 · protocol.py, main.py</p>
+    <p class="hint" data-t="nProtocol"></p>
+    <h3 data-t="hHandshake"></h3>
+    <table class="kv"><tbody id="handshake"></tbody></table>
+    <h3 data-t="hReceipt"></h3>
+    <pre id="receipt" class="mono"></pre>
+    <h3 data-t="hArgs"></h3>
+    <table class="kv"><tbody id="args"></tbody></table>
+    <h3 data-t="hEnv"></h3>
+    <p class="hint" data-t="nEnv"></p>
+    <table class="kv"><tbody id="env"></tbody></table>
+    <h3 data-t="hRuntime"></h3>
+    <table class="kv"><tbody id="runtime"></tbody></table>
+  </section>
+
+  <section class="card" id="sec-perms">
+    <h2 data-t="hPerms"></h2>
+    <p class="spec">spec-plugin-api §2 · manifest.json</p>
+    <p class="hint" data-t="nPerms"></p>
+    <table class="kv"><tbody id="perms"></tbody></table>
+  </section>
+
+  <section class="card needs-ghost" id="sec-control">
+    <h2 data-t="hControl"></h2>
+    <p class="spec">spec-plugin-api §3 · events.read.control · events.py</p>
+    <p class="hint" data-t="nControl"></p>
+    <p class="counts" id="streamLine"></p>
+    <ol id="controlList" class="events"></ol>
+  </section>
+
+  <section class="card needs-ghost" id="sec-data">
+    <h2 data-t="hData"></h2>
+    <p class="spec">spec-plugin-api §3 · events.read.data · events.py</p>
+    <p class="hint warn" data-t="nData"></p>
+    <label class="switch"><input type="checkbox" id="dataSwitch"> <span data-t="dataSwitch"></span></label>
+    <p class="counts" id="dataLine"></p>
+    <ol id="dataList" class="events"></ol>
+  </section>
+
+  <section class="card needs-ghost" id="sec-stats">
+    <h2 data-t="hStats"></h2>
+    <p class="spec">spec-plugin-api §2, §4 · stats.read · sections.py</p>
+    <p class="hint" data-t="nStats"></p>
+    <h3>GET /process-stats</h3>
+    <p class="result" id="procLine"></p>
+    <table><thead><tr><th data-t="colTarget"></th><th data-t="colProcs"></th><th data-t="colTraffic"></th><th>env</th></tr></thead>
+      <tbody id="groups"></tbody></table>
+    <h3>GET /latencies</h3>
+    <p class="result" id="latLine"></p>
+    <table><thead><tr><th data-t="colNode"></th><th data-t="colLatency"></th><th data-t="colSuccess"></th><th>UDP</th></tr></thead>
+      <tbody id="latNodes"></tbody></table>
+    <h3>GET /throughput-history</h3>
+    <p class="result" id="tpLine"></p>
+    <svg id="spark" class="spark" viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true"></svg>
+  </section>
+
+  <section class="card needs-ghost" id="sec-config">
+    <h2 data-t="hConfig"></h2>
+    <p class="spec">spec-plugin-api §4 · config.read · sections.py</p>
+    <p class="hint" data-t="nConfig"></p>
+    <table>
+      <thead><tr><th data-t="colName"></th><th data-t="colType"></th><th data-t="colAddr"></th><th>user</th><th>pass</th></tr></thead>
+      <tbody id="nodes"></tbody>
+    </table>
+    <p class="result" id="configLine"></p>
+    <button type="button" id="btnConfig" data-t="refresh"></button>
+  </section>
+
+  <section class="card needs-ghost" id="sec-log">
+    <h2 data-t="hLog"></h2>
+    <p class="spec">spec-plugin-api §5 · spec-limits §7 · log.write · sections.py</p>
+    <p class="hint" data-t="nLog"></p>
+    <button type="button" id="btnLog" data-t="btnLog"></button>
+    <table class="kv"><tbody id="logForced"></tbody></table>
+    <pre class="result" id="logResult"></pre>
+    <p class="hint" data-t="nBurst"></p>
+    <button type="button" id="btnBurst" data-t="btnBurst"></button>
+    <pre class="result" id="burstResult"></pre>
+  </section>
+
+  <section class="card needs-ghost" id="sec-assets">
+    <h2 data-t="hAssets"></h2>
+    <p class="spec">spec-plugin-api §6 · plugin.assets · sections.py</p>
+    <p class="hint" data-t="nAssets"></p>
+    <p class="result" id="ownIcon"></p>
+    <button type="button" id="btnOtherIcon" data-t="btnOtherIcon"></button>
+    <pre class="result" id="otherIconResult"></pre>
+  </section>
+
+  <section class="card needs-ghost" id="sec-gate">
+    <h2 data-t="hGate"></h2>
+    <p class="spec">spec-plugin-api §1, §2.1, §8 · spec-limits §7.1 · sections.py, ghost_api.py</p>
+    <p class="hint" data-t="nGate"></p>
+    <div class="row"><button type="button" id="btn403">403 · POST /save-config</button><pre class="result" id="r403"></pre></div>
+    <div class="row"><button type="button" id="btn401h" data-t="btn401h"></button><pre class="result" id="r401h"></pre></div>
+    <div class="row"><button type="button" id="btn401o" data-t="btn401o"></button><pre class="result" id="r401o"></pre></div>
+    <h3>429 rate_limited</h3>
+    <p class="hint" data-t="n429"></p>
+    <p class="result" id="budgetLine"></p>
+  </section>
+
+  <section class="card" id="sec-datadir">
+    <h2 data-t="hDataDir"></h2>
+    <p class="spec">spec-host-protocol §3.1 (dataDir) · state_store.py</p>
+    <p class="hint" data-t="nDataDir"></p>
+    <table class="kv"><tbody id="stateRows"></tbody></table>
+    <button type="button" id="btnReset" data-t="btnReset"></button>
+  </section>
+
+  <section class="card needs-ghost" id="sec-lifecycle">
+    <h2 data-t="hLifecycle"></h2>
+    <p class="spec">spec-host-protocol §2 · spec-limits §1 · main.py (App.restart)</p>
+    <p class="hint" data-t="nLifecycle"></p>
+    <p class="result" id="restartLine"></p>
+    <button type="button" id="btnRestart" data-t="btnRestart"></button>
+    <div id="confirmRestart" class="confirm" hidden>
+      <p data-t="confirmRestart"></p>
+      <button type="button" id="btnRestartYes" class="danger" data-t="btnRestartYes"></button>
+      <button type="button" id="btnRestartNo" data-t="btnRestartNo"></button>
+    </div>
+    <p class="result" id="restartResult"></p>
+  </section>
+
+  <section class="card" id="sec-license">
+    <h2 data-t="hLicense"></h2>
+    <p class="spec">spec-host-protocol §3.1 · spec-license §7 · main.py (license_view)</p>
+    <p class="hint" data-t="nLicense"></p>
+    <table class="kv"><tbody id="license"></tbody></table>
+  </section>
+
+  <section class="card" id="sec-embed">
+    <h2 data-t="hEmbed"></h2>
+    <p class="spec">spec-manifest §5 · spec-plugin-api §8 · ui_server.py, ui/app.js</p>
+    <p class="hint" data-t="nEmbed"></p>
+    <table class="kv"><tbody id="embed"></tbody></table>
+    <ul class="hygiene" id="hygiene"></ul>
+  </section>
+</main>
+</body>
+</html>

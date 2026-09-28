@@ -1,0 +1,113 @@
+/* Plugin Showcase page. Light or dark by prefers-color-scheme, which is the
+   OPERATING SYSTEM's setting: Ghost's WebView runs with PreferredColorScheme
+   AUTO, so an embedded frame follows Windows, not Ghost's own theme -- and v1
+   gives a plugin no way to learn Ghost's theme.
+   Nothing external: no web fonts, no images from anywhere but this server. */
+:root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1d2330;
+    --muted: #5d6677;
+    --line: #dde1e8;
+    --accent: #2f6fdd;
+    --ok: #1d8a4a;
+    --warn: #b7791f;
+    --bad: #c53030;
+    --code: #eef1f5;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0f1216;
+        --card: #171b21;
+        --text: #dfe4ec;
+        --muted: #8b94a3;
+        --line: #2a303a;
+        --accent: #5b9bff;
+        --ok: #48bb78;
+        --warn: #ecc94b;
+        --bad: #fc8181;
+        --code: #1f242c;
+    }
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    padding: 16px;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 "Segoe UI", system-ui, sans-serif;
+}
+header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+header img { border-radius: 8px; }
+h1 { margin: 0; font-size: 20px; }
+h2 { margin: 0 0 2px; font-size: 16px; }
+h3 { margin: 14px 0 4px; font-size: 13px; color: var(--muted); }
+nav { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; margin-top: 4px; }
+nav a { color: var(--accent); text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+.status { margin: 2px 0; color: var(--muted); }
+.status.ok::before, .status.off::before { content: "\25CF  "; }
+.status.ok::before { color: var(--ok); }
+.status.off::before { color: var(--muted); }
+.banner {
+    border: 1px solid var(--warn);
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: var(--card);
+}
+.banner[hidden] { display: none; }
+main { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; }
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    min-width: 0;
+}
+.card.disabled { opacity: 0.55; }
+.card.disabled button, .card.disabled input { pointer-events: none; }
+.spec { margin: 0 0 6px; font-size: 11px; color: var(--accent); font-family: Consolas, monospace; }
+.hint { margin: 4px 0 8px; color: var(--muted); font-size: 13px; }
+.hint.warn { color: var(--warn); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+table.kv td:first-child { width: 34%; color: var(--muted); font-family: Consolas, monospace; }
+td { word-break: break-all; }
+.mono, pre, .result { font-family: Consolas, monospace; font-size: 12px; }
+pre { margin: 6px 0; padding: 6px 8px; background: var(--code); border-radius: 4px; white-space: pre-wrap; word-break: break-all; }
+pre:empty { display: none; }
+.result { margin: 6px 0; }
+.good { color: var(--ok); }
+.bad { color: var(--bad); }
+.redacted { color: var(--warn); font-weight: 600; }
+.counts { color: var(--muted); font-size: 12px; margin: 4px 0; }
+button {
+    font: inherit;
+    padding: 4px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+}
+button:hover { background: var(--code); }
+button:disabled { opacity: 0.5; cursor: default; }
+button.danger { border-color: var(--bad); color: var(--bad); }
+.row { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; margin: 6px 0; }
+.row pre { flex: 1 1 200px; margin: 0; }
+.switch { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.confirm { margin: 8px 0; padding: 8px; border: 1px solid var(--bad); border-radius: 6px; }
+.confirm[hidden] { display: none; }
+.confirm p { margin: 0 0 8px; }
+ol.events { list-style: none; margin: 6px 0 0; padding: 0; max-height: 260px; overflow: auto; font-size: 12px; }
+ol.events li { padding: 2px 0; border-bottom: 1px solid var(--line); display: flex; gap: 6px; }
+ol.events .when { color: var(--muted); font-family: Consolas, monospace; flex: none; }
+ol.events .plane { color: var(--accent); flex: none; }
+ol.events .tag { color: var(--muted); flex: none; }
+ol.events li.level-warn .text { color: var(--warn); }
+ol.events li.level-error .text { color: var(--bad); }
+ol.events li.empty { color: var(--muted); }
+.spark { width: 100%; height: 48px; background: var(--code); border-radius: 4px; }
+.spark polyline { fill: none; stroke: var(--accent); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+ul.hygiene { margin: 8px 0 0; padding-left: 18px; font-size: 12px; color: var(--muted); }

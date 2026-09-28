@@ -1,0 +1,40 @@
+{
+  "v": 1,
+  "id": "com.ghostproxifier.showcase",
+  "version": "1.0.0",
+  "name": {
+    "zh": "插件能力示例",
+    "en": "Plugin Showcase"
+  },
+  "description": {
+    "zh": "官方参考插件：逐项演示 v1 插件能做的每一件事——六个权限、闸门的 401/403/429、宿主握手、私有数据目录、崩溃重拉、嵌入界面与独立运行。",
+    "en": "The official reference plugin: every v1 capability, one section each -- the six permissions, the gate's 401/403/429, the host handshake, the private data directory, crash restarts, the embedded page and standalone mode."
+  },
+  "author": {
+    "name": "Ghost Proxifier",
+    "url": "https://github.com/liliBestCoder"
+  },
+  "homepage": "https://github.com/liliBestCoder/ghost-plugin-showcase",
+  "category": "dev",
+  "icon": "icon.png",
+  "entry": "main.py",
+  "args": [
+    "--showcase-arg=from-manifest"
+  ],
+  "runtime": {
+    "kind": "python",
+    "minVersion": "3.9"
+  },
+  "ui": {
+    "embedded": true
+  },
+  "standalone": true,
+  "permissions": [
+    "events.read.control",
+    "events.read.data",
+    "stats.read",
+    "config.read",
+    "log.write",
+    "plugin.assets"
+  ]
+}
